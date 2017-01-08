@@ -6,9 +6,9 @@ import java.util.List;
 
 import guiPractice.components.Action;
 import guiPractice.components.Button;
-import guiPractice.components.ClickableScreen;
 import guiPractice.components.TextLabel;
 import guiPractice.components.Visible;
+import guiPractice.sampleGames.ClickableScreen;
 
 public class SimonScreenSam extends ClickableScreen implements Runnable {
 	
@@ -78,22 +78,6 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void initAllObjects(List<Visible> viewObjects) {
-		addButtons(viewObjects);
-		progress = getProgress();
-		label = new TextLabel(130,230,300,40,"Let's play Simon!");
-		moveset = new ArrayList<MoveInterfaceSam>();
-		//add 2 moves to start
-		lastSelectedButton = -1;
-		moveset.add(randomMove());
-		moveset.add(randomMove());
-		roundNumber = 0;
-		viewObjects.add(progress);
-		viewObjects.add(label);
-
-	}
 		private MoveInterfaceSam randomMove() {
 			ButtonInterfaceSam b;
 			int randMove = (int)(Math.random() * button.length);
@@ -107,7 +91,7 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 
 		
 
-		private MoveInterfaceSam getMove(ButtonInterfaceSam b) {
+	private MoveInterfaceSam getMove(ButtonInterfaceSam b) {
 			// TODO Auto-generated method stub
 			return null;
 		}
@@ -173,6 +157,22 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 	private ButtonInterfaceSam getAButton() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void initAllObjects(ArrayList<Visible> viewObjects) {
+		addButtons(viewObjects);
+		progress = getProgress();
+		label = new TextLabel(130,230,300,40,"Let's play Simon!");
+		moveset = new ArrayList<MoveInterfaceSam>();
+		//add 2 moves to start
+		lastSelectedButton = -1;
+		moveset.add(randomMove());
+		moveset.add(randomMove());
+		roundNumber = 0;
+		viewObjects.add(progress);
+		viewObjects.add(label);
+		
 	}
 
 }
