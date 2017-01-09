@@ -144,13 +144,14 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 							Thread nextRound = new Thread(SimonScreenSam.this);
 							nextRound.start(); 
 						}
-						viewObjects.add(b);
+						
 					}
 				}
 				
 				
 
 			});
+			viewObjects.add(b);
 		}
 	}
 
