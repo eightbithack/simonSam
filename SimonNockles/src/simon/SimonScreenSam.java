@@ -111,7 +111,7 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 		colors[3] = Color.red;
 		colors[4] = Color.green;
 		for (int i = 0; i < numberOfButtons; i++){
-			ButtonInterfaceSam b = getAButton();
+			final ButtonInterfaceSam b = getAButton();
 			b.setColor(colors[i]);
 			b.setX(i * 30);
 			b.setY(50);
