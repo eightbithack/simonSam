@@ -2,7 +2,6 @@ package simon;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.List;
 
 import guiPractice.components.Action;
 import guiPractice.components.TextLabel;
@@ -10,22 +9,23 @@ import guiPractice.components.Visible;
 import guiPractice.sampleGames.ClickableScreen;
 
 public class SimonScreenSam extends ClickableScreen implements Runnable {
-	
+
+	private ArrayList<MoveInterfaceSam> moves;
 	private TextLabel label;
 	private ButtonInterfaceSam[] button;
 	private ProgressInterfaceSam progress;
-	private ArrayList<MoveInterfaceSam> moveset;
 	
 	private int roundNumber;
-	private boolean acceptingInput;
+	private boolean incomingInput;
 	private int sequenceIndex;
-	private int lastSelectedButton = -1;
+	private int lastSelectedButton;
+	
 
 	public SimonScreenSam(int width, int height) {
 		super(width, height);
 		Thread app = new Thread(this);
 		app.start();
-		
+
 	}
 
 	@Override
@@ -34,125 +34,121 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 	    nextRound();
 	}
 
-	private void nextRound() {
-		acceptingInput = false;
+	public void nextRound() {
+		incomingInput = false;
 		roundNumber++;
-		randomMove();
+		moves.add(randomMove());
 		progress.setRound(roundNumber);
-		progress.setSequenceSize(moveset.size());
-		changeText("Simon's Turn");
+		progress.setSequenceSize(moves.size());
+		changeText("Follow the color sequence!");
 		label.setText("");
 		playSequence();
-		changeText("Your Turn");
-		acceptingInput = true;
-		sequenceIndex = 0;
+		changeText("Your turn.");
+		incomingInput = true;
+		sequenceIndex =0;
+		
 	}
 
 	private void playSequence() {
-		ButtonInterfaceSam b = null;
-		for (int i = 0; i < moveset.size(); i++){
-			if(b == null){
+		ButtonInterfaceSam b =null;
+		for(MoveInterfaceSam sequence: moves){
+			if(b!=null)//{
 				b.dimlight();
-				b = moveset.get(i).getButton();
+				b=sequence.getButton();
 				b.lightup();
-				int sleepTime = 1000/roundNumber;
-				try{
+				int sleepTime = (int)(long)(1500*(2.0/(roundNumber+2)));
+				try {
 					Thread.sleep(sleepTime);
-				}
-				catch(InterruptedException e){
+				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-			}
 		}
 		b.dimlight();
-		
 	}
 
-	private void changeText(String s) {
+	private void changeText(String string) {
 		try{
-			label.setText(s);
-			Thread.sleep(1000);
-		}
-		catch (InterruptedException e){
+			label.setText(string);
+			Thread.sleep(600);
+		}catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-		private MoveInterfaceSam randomMove() {
-			ButtonInterfaceSam b;
-			int randMove = (int)(Math.random() * button.length);
-			while (randMove == lastSelectedButton){
-				randMove = (int)(Math.random() * button.length);
-			}
-			lastSelectedButton = randMove;
-			b = button[randMove];
-			return getMove(b);
-		}
 
-		
+	@Override
+	public void initAllObjects(ArrayList<Visible> viewObjects) {
+		addButtons(viewObjects);
+		progress = getProgress();
+		label = new TextLabel(130,230,300,40,"Simon Game");
+		moves = new ArrayList<MoveInterfaceSam>();
+		lastSelectedButton = -1;
+		moves.add(randomMove());
+		moves.add(randomMove());
+		roundNumber = 0;
+		viewObjects.add(progress);
+		viewObjects.add(label);
+	}
+
+	private MoveInterfaceSam randomMove() {
+		int select = (int) (Math.random()*button.length);
+		while(select == lastSelectedButton){
+			select = (int) (Math.random()*button.length);
+		}
+		lastSelectedButton = select;
+		return new MoveVictor(button[select]);
+	}
 
 	private MoveInterfaceSam getMove(ButtonInterfaceSam b) {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		//Placeholder until partner finishes implementation of ProgressInterface
-	private ProgressInterfaceSam getProgress() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
-	private void addButtons(List<Visible> viewObjects) {
-		int numberOfButtons = 5;
-		Color[] colors = new Color[5];
-		colors[0] = Color.gray;
-		colors[1] = Color.blue;
-		colors[2] = Color.black;
-		colors[3] = Color.red;
-		colors[4] = Color.green;
+	private ProgressInterfaceSam getProgress() {
+		return new ProgressVictor();
+	}
+
+	public void addButtons(ArrayList<Visible> viewObjects) {
+		int numberOfButtons = 6;
+		Color[] colorArray = {Color.red, Color.blue, new Color(240,160,70), new Color(20,255,140), Color.yellow, new Color(180,90,210)};
 		button = new ButtonInterfaceSam[numberOfButtons];
-		
-		for (int i = 0; i < numberOfButtons; i++){
+		for(int i =0; i <numberOfButtons;i++){
 			button[i] = getAButton();
-			button[i].setColor(colors[i]);
-			button[i].setX(i * 30);
-			button[i].setY(50);
+			button[i].setColor(colorArray[i]);
+			button[i].setX(160 + (int)(50+(50*i)));
+			button[i].setY(200);
 			final ButtonInterfaceSam b = button[i];
 			b.dimlight();
-			button[i].setAction(new Action(){
-
+			b.setAction(new Action(){
 				public void act(){
-					if (acceptingInput){
+					if(incomingInput){
 						Thread blink = new Thread(new Runnable(){
-						public void run(){
-							b.lightup();
-							try{
-								Thread.sleep(800);
+							
+							public void run(){
+								b.lightup();
+								try{
+									Thread.sleep(400);
+								} catch (InterruptedException e){
+									e.printStackTrace();
+								}
+								b.dimlight();
 							}
-							catch(InterruptedException e){
-								e.printStackTrace();
-							}
-							b.dimlight();
-						}
-
-					
+							
 						});
+						
 						blink.start();
-						if (acceptingInput && b == moveset.get(sequenceIndex).getButton()){
+						
+						if(incomingInput && moves.get(sequenceIndex).getButton() == b){
 							sequenceIndex++;
 						}
-						else{
+						else if(incomingInput){
 							progress.GameOver();
+							return;
 						}
-						if(sequenceIndex == moveset.size()){
+						if(sequenceIndex == moves.size()){
 							Thread nextRound = new Thread(SimonScreenSam.this);
-							nextRound.start(); 
+							nextRound.start();
 						}
-						
 					}
 				}
-				
-				
-
 			});
 			viewObjects.add(b);
 		}
@@ -161,21 +157,6 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 	private ButtonInterfaceSam getAButton() {
 		return new ButtonVictor();
 	}
-
-	@Override
-	public void initAllObjects(ArrayList<Visible> viewObjects) {
-		addButtons(viewObjects);
-		progress = getProgress();
-		label = new TextLabel(130,230,300,40,"Let's play Simon!");
-		moveset = new ArrayList<MoveInterfaceSam>();
-		//add 2 moves to start
-		lastSelectedButton = -1;
-		moveset.add(randomMove());
-		moveset.add(randomMove());
-		roundNumber = 0;
-		viewObjects.add(progress);
-		viewObjects.add(label);
 		
-	}
 
 }

@@ -17,7 +17,7 @@ public class ProgressVictor extends Component implements ProgressInterfaceSam {
 	private String round;
 	private String pattern;
 	
-	public ProgressVictor(int x, int y, int w, int h) {
+	public ProgressVictor() {
 		super(60,60,WIDTH,HEIGHT);
 	}
 
