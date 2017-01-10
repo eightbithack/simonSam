@@ -5,21 +5,20 @@ import guiPractice.GUIApplication;
 
 public class SimonGameSam extends GUIApplication {
 
-	public SimonGameSam(int i, int j) {
-		// TODO Auto-generated constructor stub
+	public SimonGameSam() {
+		
 	}
 
 	@Override
-	protected void initScreen() {
-		SimonScreenSam work = new SimonScreenSam(getWidth(), getHeight());
-		setScreen(work);
-
+	public void initScreen() {
+		SimonScreenSam s = new SimonScreenSam(getWidth(), getHeight());
+		setScreen(s);
 	}
 
 	public static void main(String[] args) {
-		SimonGameSam game = new SimonGameSam(800,800);
+		SimonGameSam game = new SimonGameSam();
 		Thread app = new Thread(game);
 		app.start();
 	}
-
+	
 }

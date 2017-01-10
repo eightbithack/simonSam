@@ -31,9 +31,10 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 	}
 
 	@Override
-	public boolean isHovered(int arg0, int arg1) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean isHovered(int x, int y) {
+		double distance = Math.sqrt(Math.pow(x-(getX()+WIDTH/2), 2)+Math.pow(y-(getY()+HEIGHT/2), 2));
+		System.out.println(distance + " px away from "+name);
+		return distance < WIDTH/2;
 	}
 
 	@Override
@@ -71,11 +72,17 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 	@Override
 	public void update(Graphics2D g) {
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		if(displayColor != null) g.setColor(displayColor);
-		else g.setColor(Color.gray);
+		
+		if(displayColor != null){
+			g.setColor(displayColor);
+		}else{
+			g.setColor(Color.gray);
+		}
+		
 		g.fillOval(0, 0, WIDTH, HEIGHT);
 		g.setColor(Color.black);
 		g.drawOval(0, 0, WIDTH-1, HEIGHT-1);
+		
 		if(highlight){
 			g.setColor(Color.white);
 			Polygon p = new Polygon();
