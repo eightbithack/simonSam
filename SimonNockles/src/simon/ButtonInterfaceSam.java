@@ -19,6 +19,7 @@ public interface ButtonInterfaceSam extends Clickable {
 
 	void dimlight();
 	
+	void setName(String name);
 	
 
 }

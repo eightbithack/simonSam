@@ -17,9 +17,10 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 	private Color color;
 	private Color displayColor;
 	private boolean highlight;
+	private String name;
 
-	public ButtonVictor(int x, int y, int w, int h) {
-		super(x, y, WIDTH, HEIGHT);
+	public ButtonVictor() {
+		super(0, 0, WIDTH, HEIGHT);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -89,6 +90,12 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 			p.addPoint(s+8, t+3);
 			g.fill(p);
 		}
+		
+	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
 		
 	}
 

@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import guiPractice.components.Action;
-import guiPractice.components.Button;
 import guiPractice.components.TextLabel;
 import guiPractice.components.Visible;
 import guiPractice.sampleGames.ClickableScreen;
@@ -113,10 +112,11 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 		button = new ButtonInterfaceSam[numberOfButtons];
 		
 		for (int i = 0; i < numberOfButtons; i++){
-			final ButtonInterfaceSam b = getAButton();
+			button[i] = getAButton();
 			button[i].setColor(colors[i]);
 			button[i].setX(i * 30);
 			button[i].setY(50);
+			final ButtonInterfaceSam b = button[i];
 			b.dimlight();
 			button[i].setAction(new Action(){
 
@@ -159,7 +159,7 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 	}
 
 	private ButtonInterfaceSam getAButton() {
-		return new Button();
+		return new ButtonVictor();
 	}
 
 	@Override
