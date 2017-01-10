@@ -110,12 +110,15 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 		colors[2] = Color.black;
 		colors[3] = Color.red;
 		colors[4] = Color.green;
+		button = new ButtonInterfaceSam[numberOfButtons];
+		
 		for (int i = 0; i < numberOfButtons; i++){
 			final ButtonInterfaceSam b = getAButton();
-			b.setColor(colors[i]);
-			b.setX(i * 30);
-			b.setY(50);
-			b.setAction(new Action(){
+			button[i].setColor(colors[i]);
+			button[i].setX(i * 30);
+			button[i].setY(50);
+			b.dimlight();
+			button[i].setAction(new Action(){
 
 				public void act(){
 					if (acceptingInput){
@@ -156,8 +159,7 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 	}
 
 	private ButtonInterfaceSam getAButton() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Button();
 	}
 
 	@Override
