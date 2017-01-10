@@ -137,7 +137,7 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 					
 						});
 						blink.start();
-						if (b == moveset.get(sequenceIndex).getButton()){
+						if (acceptingInput && b == moveset.get(sequenceIndex).getButton()){
 							sequenceIndex++;
 						}
 						else{

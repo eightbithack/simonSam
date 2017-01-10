@@ -5,7 +5,7 @@ import guiPractice.GUIApplication;
 
 public class SimonGameSam extends GUIApplication {
 
-	public SimonGameSam() {
+	public SimonGameSam(int i, int j) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -17,7 +17,7 @@ public class SimonGameSam extends GUIApplication {
 	}
 
 	public static void main(String[] args) {
-		SimonGameSam game = new SimonGameSam();
+		SimonGameSam game = new SimonGameSam(800,800);
 		Thread app = new Thread(game);
 		app.start();
 	}

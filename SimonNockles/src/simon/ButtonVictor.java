@@ -14,7 +14,7 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 	private static final int WIDTH = 80;
 	private static final int HEIGHT = 80;
 	private Action action;
-	private Color color;
+	private Color c;
 	private Color displayColor;
 	private boolean highlight;
 	private String name;
@@ -38,7 +38,7 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 
 	@Override
 	public void setColor(Color color) {
-		this.color = color;
+		this.c = color;
 		displayColor = color;
 		update();
 		
@@ -52,8 +52,8 @@ public class ButtonVictor extends Component implements ButtonInterfaceSam {
 
 	@Override
 	public void lightup() {
-		if(color != null){
-			displayColor = color;
+		if(c != null){
+			displayColor = c;
 		}
 		highlight = true;
 		update();
