@@ -108,12 +108,13 @@ public class SimonScreenSam extends ClickableScreen implements Runnable {
 
 	public void addButtons(ArrayList<Visible> viewObjects) {
 		int numberOfButtons = 6;
-		Color[] colorArray = {Color.red, Color.blue, new Color(240,160,70), new Color(20,255,140), Color.yellow, new Color(180,90,210)};
+		Color[] colorArray = {Color.orange, Color.red, new Color(240,160,70), new Color(20,255,140), Color.yellow, new Color(180,90,210)};
+		
 		button = new ButtonInterfaceSam[numberOfButtons];
 		for(int i =0; i <numberOfButtons;i++){
 			button[i] = getAButton();
 			button[i].setColor(colorArray[i]);
-			button[i].setX(160 + (int)(50+(50*i)));
+			button[i].setX(50 + 80*i);
 			button[i].setY(200);
 			final ButtonInterfaceSam b = button[i];
 			b.dimlight();
